@@ -36,7 +36,7 @@ public class HelloControllerTest {
 
     @Test
     @DisplayName("Should check whether hello using GET method returns success")
-    public void testHelloGETSuccess() throws Exception, NameNotProvidedException {
+    public void testWhen_Success_HelloGET() throws Exception, NameNotProvidedException {
         String name = "Ozge";
         given(helloService.hello(name)).willReturn(HelloResponse.builder().statement(String.format(HelloService.HELLO_FORMAT, name)).build());
         mockMvc.perform(MockMvcRequestBuilders.get(String.format("/hello/%s", name)))
@@ -47,14 +47,14 @@ public class HelloControllerTest {
 
     @Test
     @DisplayName("Should check whether hello using GET method returns 405")
-    public void testHelloGETNameNotProvided() throws Exception {
+    public void testWhen_MethodNotAllowed_HelloGET() throws Exception {
          mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
                  .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
     @DisplayName("Should check whether hello using POST method returns success")
-    public void testHelloPOSTSuccess() throws Exception, NameNotProvidedException {
+    public void testWhen_Success_HelloPOST() throws Exception, NameNotProvidedException {
         String name = "Ozge";
         given(helloService.hello(name)).willReturn(HelloResponse.builder().statement(String.format(HelloService.HELLO_FORMAT, name)).build());
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
@@ -65,8 +65,8 @@ public class HelloControllerTest {
     }
 
     @Test
-    @DisplayName("Should check whether hello using POST method returns success")
-    public void testHelloPOSTNameGivenEmptyString() throws Exception, NameNotProvidedException {
+    @DisplayName("Should check hello returns 400 when given empty string as a name")
+    public void testWhen_NameGivenEmptyString_HelloPOST() throws Exception, NameNotProvidedException {
         given(helloService.hello("")).willThrow(new NameNotProvidedException(HelloService.NAME_VALUE_NOT_PROVIDED));
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
                 .contentType("application/json")
@@ -77,8 +77,8 @@ public class HelloControllerTest {
     }
 
     @Test
-    @DisplayName("Should check whether hello using POST method returns success")
-    public void testHelloPOSTNameGivenNull() throws Exception, NameNotProvidedException {
+    @DisplayName("Should check hello returns 400 when given null as a name")
+    public void testWhen_NameGivenNull_HelloPOST() throws Exception, NameNotProvidedException {
         given(helloService.hello(null)).willThrow(new NameNotProvidedException(HelloService.NAME_VALUE_NOT_PROVIDED));
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
                 .contentType("application/json")

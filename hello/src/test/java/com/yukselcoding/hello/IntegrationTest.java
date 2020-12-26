@@ -21,12 +21,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment=RANDOM_PORT)
 public class IntegrationTest {
 
-
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void testHelloGETSuccess() {
+    @DisplayName("Tests happy path of hello GET method")
+    public void testWhen_Success_HelloGET() {
         // arrange
         String name = "Ozge";
         String statement = String.format(HelloService.HELLO_FORMAT, name);
@@ -39,7 +39,8 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testHelloPOSTSuccess() {
+    @DisplayName("Tests happy path of hello POST method")
+    public void testWhen_Success_HelloPOST() {
         // arrange
         String name = "Ahmet";
         String statement = String.format(HelloService.HELLO_FORMAT, name);
