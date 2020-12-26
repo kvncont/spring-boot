@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class HelloControllerAdvice {
     @ExceptionHandler(NameNotProvidedException.class)
     public ResponseEntity<?> handleNameNotProvidedException(NameNotProvidedException e) {
-        return new ResponseEntity<>(HelloResponse.builder().statement(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HelloResponse
+                .builder()
+                .statement(e.getMessage())
+                .build(), HttpStatus.BAD_REQUEST);
     }
 }
