@@ -2,7 +2,6 @@ package com.yukselcoding.hello.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yukselcoding.hello.controller.HelloController;
 import com.yukselcoding.hello.exception.NameNotProvidedException;
 import com.yukselcoding.hello.request.HelloRequest;
 import com.yukselcoding.hello.response.HelloResponse;
@@ -32,13 +31,13 @@ public class HelloControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private HelloService helloService;
+    private HelloService service;
 
     @Test
     @DisplayName("Should check whether hello using GET method returns success")
     public void testWhen_Success_HelloGET() throws Exception, NameNotProvidedException {
         String name = "Ozge";
-        given(helloService.hello(name)).willReturn(HelloResponse.builder().statement(String.format(HelloService.HELLO_FORMAT, name)).build());
+        given(service.hello(name)).willReturn(HelloResponse.builder().statement(String.format(HelloService.HELLO_FORMAT, name)).build());
         mockMvc.perform(MockMvcRequestBuilders.get(String.format("/hello/%s", name)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("statement").value(String.format(HelloService.HELLO_FORMAT, name)));
@@ -56,7 +55,7 @@ public class HelloControllerTest {
     @DisplayName("Should check whether hello using POST method returns success")
     public void testWhen_Success_HelloPOST() throws Exception, NameNotProvidedException {
         String name = "Ozge";
-        given(helloService.hello(name)).willReturn(HelloResponse.builder().statement(String.format(HelloService.HELLO_FORMAT, name)).build());
+        given(service.hello(name)).willReturn(HelloResponse.builder().statement(String.format(HelloService.HELLO_FORMAT, name)).build());
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(HelloRequest.builder().name(name).build())))
@@ -67,7 +66,7 @@ public class HelloControllerTest {
     @Test
     @DisplayName("Should check hello returns 400 when given empty string as a name")
     public void testWhen_NameGivenEmptyString_HelloPOST() throws Exception, NameNotProvidedException {
-        given(helloService.hello("")).willThrow(new NameNotProvidedException(HelloService.NAME_VALUE_NOT_PROVIDED));
+        given(service.hello("")).willThrow(new NameNotProvidedException(HelloService.NAME_VALUE_NOT_PROVIDED));
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(HelloRequest.builder().name("").build())))
@@ -79,7 +78,7 @@ public class HelloControllerTest {
     @Test
     @DisplayName("Should check hello returns 400 when given null as a name")
     public void testWhen_NameGivenNull_HelloPOST() throws Exception, NameNotProvidedException {
-        given(helloService.hello(null)).willThrow(new NameNotProvidedException(HelloService.NAME_VALUE_NOT_PROVIDED));
+        given(service.hello(null)).willThrow(new NameNotProvidedException(HelloService.NAME_VALUE_NOT_PROVIDED));
         mockMvc.perform(MockMvcRequestBuilders.post("/hello")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(HelloRequest.builder().name(null).build())))
