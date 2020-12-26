@@ -26,13 +26,27 @@ public class IntegrationTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void testHelloSuccess() {
+    public void testHelloGETSuccess() {
         // arrange
         String name = "Ozge";
         String statement = String.format(HelloService.HELLO_FORMAT, name);
         // act
         ResponseEntity<HelloResponse> response = testRestTemplate
                 .getForEntity(String.format("/hello/%s", name), HelloResponse.class);
+        // assert
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getBody().getStatement(), statement);
+    }
+
+    @Test
+    public void testHelloPOSTSuccess() {
+        // arrange
+        String name = "Ahmet";
+        String statement = String.format(HelloService.HELLO_FORMAT, name);
+
+        // act
+        ResponseEntity<HelloResponse> response = testRestTemplate.postForEntity("/hello", HelloRequest.builder().name(name).build(), HelloResponse.class);
+
         // assert
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertEquals(response.getBody().getStatement(), statement);
