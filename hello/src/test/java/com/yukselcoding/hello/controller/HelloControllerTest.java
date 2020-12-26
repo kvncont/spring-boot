@@ -1,4 +1,4 @@
-package com.yukselcoding.hello;
+package com.yukselcoding.hello.controller;
 
 
 import com.yukselcoding.hello.controller.HelloController;
