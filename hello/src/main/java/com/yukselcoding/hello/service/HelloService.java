@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 
-@Log4j2
+@Log4j2(topic = "service")
 @Service
 public class HelloService {
 

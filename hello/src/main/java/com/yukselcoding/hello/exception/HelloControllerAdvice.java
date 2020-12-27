@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@Log4j2
+@Log4j2(topic = "exception")
 @ControllerAdvice
 public class HelloControllerAdvice {
     @ExceptionHandler(NameNotProvidedException.class)
