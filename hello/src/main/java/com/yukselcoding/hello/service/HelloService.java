@@ -22,6 +22,8 @@ public class HelloService {
         if(name == null || name.equals(""))
             throw new NameNotProvidedException(NAME_VALUE_NOT_PROVIDED);
         Hello hello = repository.findByName(name);
+        if(hello == null)
+            hello = repository.save(new Hello(name));
         return HelloResponse.builder().statement(String.format(HELLO_FORMAT, hello.getName())).build();
     }
 }
