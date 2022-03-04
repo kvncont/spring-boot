@@ -13,6 +13,7 @@ steps:
   inputs:
     mavenPomFile: 'hello/pom.xml'
     goals: 'clean package'
+    options: '-Dtest="HelloRepositoryTest"'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
